@@ -14,7 +14,7 @@ int divide(int *array, int l_value, int h_value, size_t size)
 
 	for (j = l_value; j < h_value; j++)
 	{
-		if (array[j] < pivot)
+		if (array[j] <= pivot)
 		{
 			if (i != j)
 			{
