@@ -21,14 +21,7 @@ void sort(listint_t *tmp, listint_t **head)
 		else
 			*head = tmp;
 		ptr = *head;
-		while (ptr)
-		{
-			if (ptr->next != NULL)
-				printf("%i, ", ptr->n);
-			else
-				printf("%i\n", ptr->n);
-			ptr = ptr->next;
-		}
+		print_list(ptr);
 	}
 }
 /**
