@@ -12,23 +12,27 @@ int divide(int *array, int l_value, int h_value, size_t size)
 	int pivot = array[h_value];
 	int i = l_value, j, tmp;
 
-	for (j = l_value; j <= h_value; j++)
+	for (j = l_value; j < h_value; j++)
 	{
 		if (array[j] < pivot)
 		{
-			tmp = array[i];
-			array[i] = array[j];
-			array[j] = tmp;
 			if (i != j)
+			{
+				tmp = array[i];
+				array[i] = array[j];
+				array[j] = tmp;
 				print_array(array, size);
+			}
 			i++;
 		}
 	}
-	tmp = array[i];
-	array[i] = array[h_value];
-	array[h_value] = tmp;
 	if (i != h_value)
+	{
+		tmp = array[i];
+		array[i] = array[h_value];
+		array[h_value] = tmp;
 		print_array(array, size);
+	}
 	return (i);
 }
 /**
