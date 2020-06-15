@@ -1,55 +1,53 @@
 #include "sort.h"
 /**
- *
- *
- *
- *
+ * divide - split array to sort
+ * @array: array to sort
+ * @l_value: index of lower value
+ * @h_value: index of higher value
+ * @size: size of array
+ * Return: index of partition
  */
-void recursive_qs(int *array, size_t piv, size_t ia, size_t size)
+int divide(int *array, int l_value, int h_value, size_t size)
 {
-	int tmp, bol = 0;
-	size_t save;
+	int pivot = array[h_value];
+	int i = l_value, j, tmp;
 
-	save = ia;
-	if (piv - ia < 3)
-		bol++;
-	while (piv > ia)
+	for (j = l_value; j < h_value; j++)
 	{
-		if (array[ia] < array[piv])
+		if (array[j] < pivot)
 		{
-			ia++;
-			continue;
-		}
-		tmp = array[ia];
-		array[ia] = array[piv - 1];
-		array[piv - 1] = tmp;
-		if (array[piv - 1] > array[piv])
-		{
-			tmp = array[piv];
-			array[piv] = array[piv - 1];
-			array[piv - 1] = tmp;
-			piv--;
-		}
-		if (array[ia] < array[piv])
-			ia++;
-	}
-	print_array(array, size);
-	if (bol == 0)
-	{
-		if (piv <= save + 1)
-			recursive_qs(array, size - 1, piv + 1, size);
-		else if (piv > size - 3)
-		{
-			recursive_qs(array, piv - 1, save, size);
-		}
-		else
-		{
-			recursive_qs(array, piv - 1, 0, size);
-			recursive_qs(array, size - 1, piv + 1, size);
+			tmp = array[i];
+			array[i] = array[j];
+			array[j] = tmp;
+			if (i != j)
+				print_array(array, size);
+			i++;
 		}
 	}
-	print_array(array, size);
-	return;
+	tmp = array[i];
+	array[i] = array[h_value];
+	array[h_value] = tmp;
+	if (i != h_value)
+		print_array(array, size);
+	return (i);
+}
+/**
+ * recu_quick - recursive function to sort array
+ * @array: array to sort
+ * @l_value: index of lower value
+ * @h_value: index of higher value
+ * @size: size of array
+ */
+void recu_quick(int *array, int l_value, int h_value, size_t size)
+{
+	int resul;
+
+	if (l_value < h_value)
+	{
+		resul = divide(array, l_value, h_value, size);
+		recu_quick(array, l_value, resul - 1, size);
+		recu_quick(array, resul + 1, h_value, size);
+	}
 }
 
 
@@ -60,5 +58,5 @@ void recursive_qs(int *array, size_t piv, size_t ia, size_t size)
  */
 void quick_sort(int *array, size_t size)
 {
-	recursive_qs(array, size - 1, 0, size);
+	recu_quick(array, 0, size - 1, size);
 }
