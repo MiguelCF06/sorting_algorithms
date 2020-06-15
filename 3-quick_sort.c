@@ -58,7 +58,6 @@ void recu_quick(int *array, int l_value, int h_value, size_t size)
  */
 void quick_sort(int *array, size_t size)
 {
-	if (!array || size < 2)
-		return;
-	recu_quick(array, 0, size - 1, size);
+	if (size > 1)
+		recu_quick(array, 0, size - 1, size);
 }
