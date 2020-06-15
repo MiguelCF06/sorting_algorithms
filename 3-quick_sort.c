@@ -12,7 +12,7 @@ int divide(int *array, int l_value, int h_value, size_t size)
 	int pivot = array[h_value];
 	int i = l_value, j, tmp;
 
-	for (j = l_value; j < h_value; j++)
+	for (j = l_value; j <= h_value; j++)
 	{
 		if (array[j] < pivot)
 		{
@@ -58,6 +58,7 @@ void recu_quick(int *array, int l_value, int h_value, size_t size)
  */
 void quick_sort(int *array, size_t size)
 {
-	if (size > 1)
-		recu_quick(array, 0, size - 1, size);
+	if (!array || size < 2)
+		return;
+	recu_quick(array, 0, size - 1, size);
 }
