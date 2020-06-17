@@ -1,36 +1,36 @@
 #include "sort.h"
 /**
- *
- *
+ * radix_sort - sort arrays with radix algorithm
+ * @array: array
+ * @size: size of array
  */
 void radix_sort(int *array, size_t size)
 {
 	int ary[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-	int *n_ar = NULL, j, div = 10, num, max = 0;
+	int *n_ar = NULL, div = 10, num, max = 0;
 	size_t i;
 
+	if (size == 0 || size == 1)
+		return;
 	n_ar = malloc(sizeof(int) * size);
 	if (!n_ar)
 		return;
-	for (i = 0; i < size; i++)
-		if (array[i] > max)
-			max = array[i];
-	
-	for (i = 1; max / 10 != 0; i++)
-		max /= 10;
-	max = i;
-	for (j = 0; j < max; j++)
-	{
+	do {
 		for (i = 0; i < size; i++)
 		{
-			num = (array[i] % div) / (div/10);
+			if (div == 10)
+			{
+				if (array[i] > max)
+					max = array[i];
+			}
+			num = (array[i] % div) / (div / 10);
 			ary[num] += 1;
 		}
 		for (i = 1; i < 10; i++)
 			ary[i] += ary[i - 1];
 		for (i = 0; i < size; i++)
 		{
-			num = (array[size - 1 - i] % div) / (div/10);
+			num = (array[size - 1 - i] % div) / (div / 10);
 			ary[num] -= 1;
 			n_ar[ary[num]] = array[size - 1 - i];
 		}
@@ -39,8 +39,8 @@ void radix_sort(int *array, size_t size)
 			array[i] = n_ar[i];
 		for (i = 0; i < 10; i++)
 			ary[i] = 0;
-		div *= 10;
+		max /= 10, div *= 10;
 		print_array(array, size);
-	}
+	} while (max != 0);
 	free(n_ar);
 }
